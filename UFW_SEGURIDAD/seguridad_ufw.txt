@@ -1,0 +1,18 @@
+1.- sudo apt-get update
+
+2.- sudo apt-get install ufw   ->instalar el fireword
+
+####################################333
+Bloquear todo tipo de conexiones.
+
+1.- sudo ufw default deny incoming  ->Bloques todas las peticiones
+
+2.- sudo ufw default  allow outgoing  ->Permitir las conexiones
+
+3.- sudo ufw allow ssh   ->Permitir conexiones ssh
+
+4.- sudo ufw allow www  ->permitir los www
+
+5.- sudo ufw status  -> estado
+
+6.- sudo ufw allow 443/tcp  ->puerto 443

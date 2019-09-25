@@ -1,0 +1,12 @@
+1.- adduser prueba  ->crea la cuenta y el grupo prueba pide password y repetir
+
+2.- deluser prueba  ->elimina al usuario
+
+#####################################33
+Dar permisos sudo a un usuario.
+
+1.- sudo adduser rodrigorvn sudo  -> lo crea como sudo
+
+2.- paraa cualquier tarea agregar sudo
+
+sudo mkdir prueba  ->ojo con este usuario

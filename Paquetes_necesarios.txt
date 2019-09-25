@@ -1,0 +1,96 @@
+Paquetes que son necesarios.
+
+1.- service nginx status   ->verifica el estado del sevidor nginx
+
+2.- service mysql status   ->mysql
+
+3.- service php5-fpm status ->php
+
+4.- service nginx stop  ->Parar servicio.
+
+5.- service nginx  start  ->Iniciar
+
+6.- service nginx restart  ->reiniciar
+
+######################################################3
+
+Reiniciar sistema.
+
+1.- sudo reboot   -> pedira los permisos administrativos.
+
+###############################################################
+
+Instalaciones.
+
+Para instalar Nginx, sólo basta con ejecutar el comando:
+
+sudo apt-get install nginx
+
+Instalación de MySQL:
+Para MySQL deberás obtener los componentes y luego ejecutar el instalador, así:
+
+Para obtener los componenets, ejecuta
+apt-get install mysql-server
+	
+Para instalar y ejecutar el servicio de MySQL, ejecuta
+sudo mysql_install_db
+	
+Este último paso te va a solicitar ingresar una contraseña (usa cualquiera) para el usuario root de la base de datos. La instalación de seguridad la llevaremos a cabo posteriormente, por ahora con esto será suficiente.
+
+
+Instalación de PHP5-FPM y el Módulo de MySQL (para PHP)
+Una vez más con apt-get podrás instalar PHP5-FPM para que funcione en conjunto con Nginx y adicionalmente será necesario instalar el módulo (el controlador) de MySQL para PHP, así:
+
+sudo apt-get install php5-fpm php5-mysql
+¡Ojo! Un detalle de seguridad con PHP5-FPM:
+Abre el archivo php.ini, ubicado en /etc/php5/fpm/php.ini, ejecutando:
+
+sudo nano /etc/php5/fpm/php.in
+Y presionando Ctrl+W para realizar una búsqueda, busca lo siguiente: cgi.fix_pathinfo=
+
+En cuanto lo encuentras, elimina el ";" al comienzo de dicha línea y cambia el =1 por =0, es decir:
+
+Cambia esto:
+
+;cgi.fix_pathinfo=1
+Por esto:
+
+cgi.fix_pathinfo=0
+Presionas Ctrl+X para salir y guardas los cambios, después de esto, sería adecuado reiniciar el servidio de PHP5-FMP, así:
+
+sudo service php5-fpm restart
+
+Agregar Soporte de PHP a Nginx:
+Este es un paso simple, vamos simplemente a indicarle al sitio por defecto de nginx (default por ahora) qué hacer con los archivos .php y que además considere los archivos index.php como archivos principales.
+
+Simplemente deberás abrir el archivo default ubicado en /etc/nginx/sites-available/, así:
+
+sudo nano /etc/nginx/sites-available/default
+Presionando Ctrl+K remueve todas las línea de este archivo (sí, todas :D) y simplemente pega lo siguiente:
+
+server {
+        listen 80 default_server;
+        listen [::]:80 default_server ipv6only=on;
+        root /usr/share/nginx/html;
+        index index.php index.html index.htm;
+        # Make site accessible from http://localhost/
+        server_name localhost;
+        location / {
+                try_files $uri $uri/ =404;
+        }
+        location ~ \.php$ {
+                try_files $uri =404;
+                fastcgi_split_path_info ^(.+\.php)(/.+)$;
+                fastcgi_pass unix:/var/run/php5-fpm.sock;
+                fastcgi_index index.php;
+                include fastcgi_params;
+        }
+        #deny access to .htaccess files, if Apache's document root
+        #concurs with nginx's one
+        location ~ /\.ht {
+                deny all;
+        }
+}
+Descuida, también puedes copiarlos desde los recursos de la lectura y pegarlo directamente. Recuerda: para pegar simplemente presiona clic derecho en la consola.
+
+Recursos de esta clase

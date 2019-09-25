@@ -1,0 +1,9 @@
+1.- apt-get update
+
+2.- apt-get install php5-cli 
+
+3.-  apt-get install mcrypt php5-mcrypt     ->instala dos paquetes a la vez 
+
+4.- php5enmod mcrypt   ->habilita el paquete
+
+5.- service php5-fpm reload

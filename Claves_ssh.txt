@@ -1,0 +1,9 @@
+Cuando se crea las claves se crean dos.
+
+1.- la privada id_rsa
+
+2.- la publica  id_rsa.pub   --> servicios de terceros.
+
+3.- para ver y copiar la clave seria 
+
+4.- cat id_rsa.pub   -> te muestra toda la clave para copiarla a terceros.

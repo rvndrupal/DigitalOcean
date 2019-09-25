@@ -1,0 +1,5 @@
+1.-  abrir -->  nano  prueba.txt
+
+2.-ctrl + x  y  enter 
+
+3.-cat prueba.txt   -->solo te muestra el archivo sin editarlo
